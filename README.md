@@ -91,7 +91,9 @@ npm run dev
 - Supabase Studio: `http://127.0.0.1:54323`
 
 ## Supabase Migration Instructions
-- Main migration file: `supabase/migrations/0001_init.sql`
+- Migration files:
+- `supabase/migrations/0001_init.sql`
+- `supabase/migrations/0002_storage_documents_policies.sql`
 - To re-run from scratch:
 ```bash
 supabase db reset --local
@@ -110,7 +112,7 @@ supabase db reset --local
 - Create a user first (Auth UI), then run `supabase db reset --local`.
 
 ## Storage Setup
-Create a private bucket named `documents` in Supabase Storage.
+The `documents` bucket and storage object policies are created by `0002_storage_documents_policies.sql`.
 
 Recommended object path convention:
 - `documents/{user_id}/{application_id}/{timestamp}_{filename}`
@@ -124,7 +126,7 @@ Required:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-For Vercel production, set both in Project Settings.
+For Vercel production, set both in Project Settings. You can copy from `.env.example`.
 
 ## Scripts
 - `npm run dev` start local app
@@ -140,7 +142,7 @@ For Vercel production, set both in Project Settings.
 4. Deploy.
 5. In Supabase production project:
 - Run `0001_init.sql`
-- Configure Storage bucket + storage policies
+- Run `0002_storage_documents_policies.sql`
 - Ensure Auth email/password enabled
 
 ## Reminder Email (Optional Future Integration)
