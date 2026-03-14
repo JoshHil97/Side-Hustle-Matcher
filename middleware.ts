@@ -5,7 +5,6 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("jobcrm_token")?.value;
 
   const isDashboardPath = pathname.startsWith("/dashboard");
-  const isAuthPath = pathname === "/login" || pathname === "/signup";
 
   if (isDashboardPath && !token) {
     const redirectUrl = new URL("/login", request.url);
@@ -13,10 +12,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  if (isAuthPath && token) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
+  // Always allow /login and /signup.
+  // A stale cookie can exist even when auth is invalid, and forcing redirects here can create loops.
   return NextResponse.next();
 }
 
