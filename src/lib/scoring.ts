@@ -1,9 +1,12 @@
 import { exampleUserAnswers } from "@/data/exampleUser";
+import { quizQuestions } from "@/data/questions";
 import { roleFamilyById } from "@/data/roleFamilies";
 import { sideHustles } from "@/data/sideHustles";
 import {
+  buildCommercialAngle,
   buildConstraintRationale,
   buildPenaltyReasons,
+  buildPersonalizedSummary,
   buildWhyItFits,
   startupDifficulty,
 } from "@/lib/recommendation-explanations";
@@ -11,6 +14,7 @@ import type {
   GoalPreference,
   NormalizedUserProfile,
   RecommendationBundle,
+  RecommendationEvidence,
   RecommendationResult,
   RoleFamilyId,
   ScoreBreakdown,
@@ -86,17 +90,17 @@ const COST_RANK: Record<StartupCostBand, number> = {
 };
 
 const GOAL_SCALABILITY_PREF: Record<GoalPreference, number> = {
-  fast_cash: 0.7,
-  predictable_income: 0.85,
-  portfolio_building: 0.75,
+  fast_cash: 0.75,
+  predictable_income: 0.88,
+  portfolio_building: 0.8,
   scalable_business: 1,
 };
 
 const GOAL_SPEED_PREF: Record<GoalPreference, number> = {
   fast_cash: 1,
-  predictable_income: 0.85,
-  portfolio_building: 0.65,
-  scalable_business: 0.5,
+  predictable_income: 0.88,
+  portfolio_building: 0.7,
+  scalable_business: 0.55,
 };
 
 const SCALE_TO_SCORE = {
@@ -106,8 +110,8 @@ const SCALE_TO_SCORE = {
 };
 
 const TIME_TO_CASH_SCORE: Record<TimeToFirstIncome, number> = {
-  fast: 90,
-  moderate: 65,
+  fast: 92,
+  moderate: 66,
   slow: 38,
 };
 
@@ -123,6 +127,18 @@ function toArray(value: string[] | string | undefined): string[] {
 function dedupe<T>(items: T[]) {
   return Array.from(new Set(items));
 }
+
+function optionLookup(questionId: string) {
+  const question = quizQuestions.find((item) => item.id === questionId);
+  if (!question) return {} as Record<string, string>;
+
+  return Object.fromEntries(question.options.map((option) => [option.value, option.label])) as Record<string, string>;
+}
+
+const TASK_LABELS = optionLookup("weeklyTasks");
+const TOOL_LABELS = optionLookup("toolsUsed");
+const OUTPUT_LABELS = optionLookup("outputsOwned");
+const INDUSTRY_LABELS = optionLookup("industry");
 
 function roleFamilyFromAnswers(answers: QuizAnswers): RoleFamilyId {
   const role = answers.roleFamily;
@@ -161,12 +177,19 @@ export function normalizeAnswers(answers: QuizAnswers): NormalizedUserProfile {
     ] as SkillTag[],
   );
 
+  const industry = (typeof answers.industry === "string" ? answers.industry : "other") as NormalizedUserProfile["industry"];
+
   return {
     roleFamily,
-    industry: (typeof answers.industry === "string" ? answers.industry : "other") as NormalizedUserProfile["industry"],
+    roleFamilyLabel: roleFamilyById[roleFamily].label,
+    industry,
+    industryLabel: INDUSTRY_LABELS[industry] ?? "Other",
     taskSignatures,
+    taskLabels: taskSignatures.map((task) => TASK_LABELS[task] ?? task),
     tools,
+    toolLabels: tools.map((tool) => TOOL_LABELS[tool] ?? tool),
     outputs,
+    outputLabels: outputs.map((output) => OUTPUT_LABELS[output] ?? output),
     skillTags: inferredSkills,
     skillMaturity: inferSkillMaturity(answers, outputs.length),
     constraints: {
@@ -228,10 +251,10 @@ function scoreSkillMatch(profile: NormalizedUserProfile, hustle: SideHustle) {
   const requiredRatio = hustle.requiredSkills.length > 0 ? matchedRequired.length / hustle.requiredSkills.length : 0;
   const preferredRatio = hustle.preferredSkills.length > 0 ? matchedPreferred.length / hustle.preferredSkills.length : 0;
 
-  let score = requiredRatio * 70 + preferredRatio * 20;
+  let score = requiredRatio * 72 + preferredRatio * 18;
 
   if (hustle.roleAffinity.includes(profile.roleFamily)) {
-    score += 10;
+    score += 8;
   }
 
   if (profile.skillMaturity === "advanced" && hustle.beginnerFriendly <= 6) {
@@ -245,11 +268,14 @@ function scoreSkillMatch(profile: NormalizedUserProfile, hustle: SideHustle) {
   return {
     score: clamp(score),
     matchedSkills: dedupe([...matchedRequired, ...matchedPreferred]),
+    matchedRequired,
+    matchedPreferred,
+    requiredRatio,
   };
 }
 
 function scorePreferenceFit(profile: NormalizedUserProfile, hustle: SideHustle) {
-  let score = 45;
+  let score = 46;
 
   const { workStyle, goal } = profile.preferenceStyle;
 
@@ -277,7 +303,7 @@ function scorePreferenceFit(profile: NormalizedUserProfile, hustle: SideHustle) 
 }
 
 function scoreConstraintFit(profile: NormalizedUserProfile, hustle: SideHustle) {
-  let score = 95;
+  let score = 96;
 
   if (profile.constraints.maxWeeklyHours < hustle.weeklyHoursMin + 2) score -= 12;
   if (profile.constraints.callsAvailable === "limited" && hustle.callIntensity === "high") score -= 10;
@@ -286,6 +312,27 @@ function scoreConstraintFit(profile: NormalizedUserProfile, hustle: SideHustle) 
   if (profile.constraints.regulatoryTolerance === "medium" && hustle.regulatoryFriction === "high") score -= 12;
   if (profile.constraints.employerConflict === "avoid_same_industry" && hustle.sameIndustryRisk === "high") score -= 14;
   if (profile.constraints.employerConflict === "unsure" && hustle.sameIndustryRisk !== "low") score -= 8;
+
+  return clamp(score);
+}
+
+function scoreCommercialFit(profile: NormalizedUserProfile, hustle: SideHustle) {
+  let score = 50;
+
+  if (profile.preferenceStyle.goal === "fast_cash" && hustle.timeToFirstIncome === "fast") score += 18;
+  if (profile.preferenceStyle.goal === "predictable_income" && hustle.weeklyHoursMax <= 16) score += 14;
+  if (profile.preferenceStyle.goal === "scalable_business" && hustle.scalability === "high") score += 18;
+  if (profile.preferenceStyle.goal === "portfolio_building" && hustle.scalability !== "low") score += 10;
+
+  if (profile.constraints.salesComfort === hustle.salesIntensity) score += 10;
+  if (profile.constraints.salesComfort === "low" && hustle.salesIntensity === "medium") score += 2;
+  if (profile.constraints.salesComfort === "high" && hustle.salesIntensity === "medium") score += 4;
+
+  if (profile.constraints.callsAvailable === "yes" && hustle.callIntensity !== "low") score += 6;
+  if (profile.constraints.callsAvailable === "limited" && hustle.callIntensity === "medium") score += 6;
+  if (profile.constraints.callsAvailable === "no" && hustle.callIntensity === "low") score += 8;
+
+  if (hustle.roleAffinity.includes(profile.roleFamily)) score += 6;
 
   return clamp(score);
 }
@@ -337,29 +384,102 @@ function frictionPenalty(profile: NormalizedUserProfile, hustle: SideHustle) {
   return { penalty, reasons };
 }
 
+function scoreEvidenceFromSignals(
+  selected: string[],
+  labels: Record<string, string>,
+  map: Record<string, SkillTag[]>,
+  hustle: SideHustle,
+) {
+  const required = new Set(hustle.requiredSkills);
+  const preferred = new Set(hustle.preferredSkills);
+
+  return selected
+    .map((value) => {
+      const skillTags = map[value] ?? [];
+      const requiredHits = skillTags.filter((skill) => required.has(skill)).length;
+      const preferredHits = skillTags.filter((skill) => preferred.has(skill)).length;
+      const score = requiredHits * 2 + preferredHits;
+
+      return {
+        label: labels[value] ?? value,
+        score,
+      };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+}
+
+function buildEvidence(profile: NormalizedUserProfile, hustle: SideHustle) {
+  const taskSignals = scoreEvidenceFromSignals(profile.taskSignatures, TASK_LABELS, TASK_TO_SKILLS, hustle);
+  const toolSignals = scoreEvidenceFromSignals(profile.tools, TOOL_LABELS, TOOL_TO_SKILLS, hustle);
+  const outputSignals = scoreEvidenceFromSignals(profile.outputs, OUTPUT_LABELS, OUTPUT_TO_SKILLS, hustle);
+
+  const evidence: RecommendationEvidence = {
+    tasks: taskSignals.slice(0, 3).map((item) => item.label),
+    tools: toolSignals.slice(0, 2).map((item) => item.label),
+    outputs: outputSignals.slice(0, 2).map((item) => item.label),
+  };
+
+  const rawStrength = [...taskSignals.slice(0, 3), ...toolSignals.slice(0, 2), ...outputSignals.slice(0, 2)].reduce(
+    (sum, item) => sum + item.score,
+    0,
+  );
+
+  const evidenceStrength = clamp(Math.round(rawStrength * 6));
+
+  return {
+    evidence,
+    evidenceStrength,
+  };
+}
+
+function scoreConfidenceFit(
+  profile: NormalizedUserProfile,
+  hustle: SideHustle,
+  requiredRatio: number,
+  evidenceStrength: number,
+) {
+  let score = 35 + requiredRatio * 45 + evidenceStrength * 0.2;
+
+  if (profile.skillMaturity === "advanced") score += 8;
+  if (profile.skillMaturity === "applied") score += 4;
+
+  if (profile.constraints.maxWeeklyHours >= hustle.weeklyHoursMin + 3) score += 6;
+  if (profile.constraints.maxWeeklyHours < hustle.weeklyHoursMin + 1) score -= 8;
+
+  return clamp(score);
+}
+
 function computeBreakdown(profile: NormalizedUserProfile, hustle: SideHustle): {
   breakdown: ScoreBreakdown;
   matchedSkills: SkillTag[];
   totalScore: number;
   penalties: string[];
+  evidence: RecommendationEvidence;
+  confidenceScore: number;
+  commercialFit: number;
 } {
   const skills = scoreSkillMatch(profile, hustle);
   const preferenceFit = scorePreferenceFit(profile, hustle);
   const constraintFit = scoreConstraintFit(profile, hustle);
+  const commercialFit = scoreCommercialFit(profile, hustle);
   const scalabilityFit = SCALE_TO_SCORE[hustle.scalability] * GOAL_SCALABILITY_PREF[profile.preferenceStyle.goal];
   const speedToCashFit = TIME_TO_CASH_SCORE[hustle.timeToFirstIncome] * GOAL_SPEED_PREF[profile.preferenceStyle.goal];
 
+  const { evidence, evidenceStrength } = buildEvidence(profile, hustle);
+  const confidenceFit = scoreConfidenceFit(profile, hustle, skills.requiredRatio, evidenceStrength);
   const friction = frictionPenalty(profile, hustle);
 
-  // Weighted sum intentionally separated to keep scoring easy to tune later.
+  // Weighted components: skill + constraints + commercial viability dominate the final ranking.
   const weightedBase =
-    skills.score * 0.4 +
-    preferenceFit * 0.2 +
-    constraintFit * 0.22 +
-    scalabilityFit * 0.1 +
-    speedToCashFit * 0.08;
+    skills.score * 0.31 +
+    preferenceFit * 0.14 +
+    constraintFit * 0.18 +
+    commercialFit * 0.2 +
+    confidenceFit * 0.11 +
+    scalabilityFit * 0.03 +
+    speedToCashFit * 0.03;
 
-  // Friction penalties subtract from the weighted base to suppress impractical options.
   const totalScore = clamp(Math.round(weightedBase - friction.penalty));
 
   return {
@@ -367,6 +487,8 @@ function computeBreakdown(profile: NormalizedUserProfile, hustle: SideHustle): {
       skillMatch: Math.round(skills.score),
       preferenceFit: Math.round(preferenceFit),
       constraintFit: Math.round(constraintFit),
+      commercialFit: Math.round(commercialFit),
+      confidenceFit: Math.round(confidenceFit),
       scalabilityFit: Math.round(scalabilityFit),
       speedToCashFit: Math.round(speedToCashFit),
       frictionPenalty: friction.penalty,
@@ -374,17 +496,20 @@ function computeBreakdown(profile: NormalizedUserProfile, hustle: SideHustle): {
     matchedSkills: skills.matchedSkills,
     totalScore,
     penalties: friction.reasons,
+    evidence,
+    confidenceScore: Math.round(confidenceFit),
+    commercialFit: Math.round(commercialFit),
   };
 }
 
 function fitLabel(score: number): RecommendationResult["fitLabel"] {
-  if (score >= 78) return "High Fit";
-  if (score >= 60) return "Solid Fit";
+  if (score >= 80) return "High Fit";
+  if (score >= 62) return "Solid Fit";
   return "Stretch";
 }
 
 function evaluateHustle(profile: NormalizedUserProfile, hustle: SideHustle): RecommendationResult {
-  const { breakdown, matchedSkills, penalties, totalScore } = computeBreakdown(profile, hustle);
+  const { breakdown, matchedSkills, penalties, totalScore, evidence, confidenceScore, commercialFit } = computeBreakdown(profile, hustle);
 
   return {
     sideHustle: hustle,
@@ -392,9 +517,13 @@ function evaluateHustle(profile: NormalizedUserProfile, hustle: SideHustle): Rec
     totalScore,
     breakdown,
     matchedSkills,
-    whyItFits: buildWhyItFits(profile, hustle, matchedSkills),
+    personalizedSummary: buildPersonalizedSummary(profile, hustle, evidence),
+    evidence,
+    commercialAngle: buildCommercialAngle(profile, hustle, evidence),
+    whyItFits: buildWhyItFits(profile, hustle, matchedSkills, evidence, commercialFit, confidenceScore),
     constraintRationale: buildConstraintRationale(profile, hustle),
     penaltyReasons: buildPenaltyReasons(penalties),
+    confidenceScore,
     startupDifficulty: startupDifficulty(hustle),
   };
 }
@@ -413,8 +542,6 @@ export function getRecommendations(answers: QuizAnswers): RecommendationBundle {
 
   const topMatches = eligible.slice(0, 3);
   const alternatives = eligible.slice(3, 5);
-
-  // Poor fit is intentionally selected from ineligible options so the user sees what to avoid.
   const poorFit = ineligible[0] ?? null;
 
   return {

@@ -117,3 +117,23 @@ The `/results` page includes a "Scoring engine example" table that shows top 5 s
 - No external APIs or database yet; all data is local and editable.
 - Quiz answers are stored in browser localStorage (`side_hustle_matcher_answers_v1`).
 - This MVP is production-minded in structure, but designed for rapid iteration of the recommendation engine.
+
+## Vercel launch prep
+
+This project is build-clean for production (`npm run build` passes).
+
+### Deploy steps
+
+1. Push `main` to GitHub.
+2. Import the repo in Vercel.
+3. Build command: `npm run build`
+4. Output: Next.js default
+
+### Environment variables
+
+For the Side Hustle Matcher routes (`/`, `/quiz`, `/results`), no database env vars are required.
+
+If you also want login/signup/dashboard routes active, add:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`

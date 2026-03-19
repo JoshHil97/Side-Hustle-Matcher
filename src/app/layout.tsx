@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, IBM_Plex_Mono } from "next/font/google";
+import { InspirationVerse } from "@/components/layout/inspiration-verse";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -16,12 +17,20 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Side Hustle Matcher",
   description: "Practical side hustle recommendations based on your real role, skills, and constraints.",
+  icons: {
+    icon: "/side-hustle-logo.svg",
+    shortcut: "/side-hustle-logo.svg",
+    apple: "/side-hustle-logo.svg",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${plexMono.variable}`}>{children}</body>
+      <body className={`${manrope.variable} ${plexMono.variable} pb-20`}>
+        {children}
+        <InspirationVerse />
+      </body>
     </html>
   );
 }

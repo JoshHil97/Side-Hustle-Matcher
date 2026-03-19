@@ -169,10 +169,15 @@ export interface PreferenceStyle {
 
 export interface NormalizedUserProfile {
   roleFamily: RoleFamilyId;
+  roleFamilyLabel: string;
   industry: IndustryId;
+  industryLabel: string;
   taskSignatures: string[];
+  taskLabels: string[];
   tools: string[];
+  toolLabels: string[];
   outputs: string[];
+  outputLabels: string[];
   skillTags: SkillTag[];
   skillMaturity: SkillMaturity;
   constraints: UserConstraints;
@@ -183,9 +188,25 @@ export interface ScoreBreakdown {
   skillMatch: number;
   preferenceFit: number;
   constraintFit: number;
+  commercialFit: number;
+  confidenceFit: number;
   scalabilityFit: number;
   speedToCashFit: number;
   frictionPenalty: number;
+}
+
+export interface RecommendationEvidence {
+  tasks: string[];
+  tools: string[];
+  outputs: string[];
+}
+
+export interface CommercialAngle {
+  idealBuyer: string;
+  offerPositioning: string;
+  suggestedStarterPrice: string;
+  outreachStarter: string;
+  conversionCTA: string;
 }
 
 export interface RecommendationResult {
@@ -194,9 +215,13 @@ export interface RecommendationResult {
   totalScore: number;
   breakdown: ScoreBreakdown;
   matchedSkills: SkillTag[];
+  personalizedSummary: string;
+  evidence: RecommendationEvidence;
+  commercialAngle: CommercialAngle;
   whyItFits: string[];
   constraintRationale: string[];
   penaltyReasons: string[];
+  confidenceScore: number;
   startupDifficulty: "Low" | "Medium" | "High";
 }
 

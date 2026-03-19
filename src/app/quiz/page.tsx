@@ -96,13 +96,13 @@ export default function QuizPage() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
       <div className="mb-6 flex items-center justify-between gap-3">
-        <Link href="/" className="text-sm font-medium text-slate-600 hover:text-slate-900">
+        <Link href="/" className="text-sm font-medium text-stone-600 hover:text-stone-900">
           ← Back to home
         </Link>
-        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">One question per step</span>
+        <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-700">One question per step</span>
       </div>
 
-      <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm shadow-slate-900/5 sm:p-6">
+      <div className="rounded-3xl border border-stone-200 bg-white p-4 shadow-sm shadow-stone-900/5 sm:p-6">
         <ProgressBar currentStep={currentIndex + 1} totalSteps={quizQuestions.length} />
       </div>
 
@@ -115,7 +115,7 @@ export default function QuizPage() {
           type="button"
           onClick={goBack}
           disabled={currentIndex === 0}
-          className="inline-flex h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-11 items-center rounded-xl border border-stone-300 bg-white px-5 text-sm font-semibold text-stone-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Back
         </button>
@@ -123,7 +123,7 @@ export default function QuizPage() {
           type="button"
           onClick={goNext}
           disabled={!canContinue}
-          className="inline-flex h-11 items-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-11 items-center rounded-xl bg-stone-900 px-5 text-sm font-semibold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {currentIndex === quizQuestions.length - 1 ? "See my matches" : "Next"}
         </button>
