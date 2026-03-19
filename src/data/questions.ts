@@ -175,9 +175,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "What startup budget feels comfortable right now?",
     type: "single",
     options: [
-      { value: "low", label: "Low (under $250)" },
-      { value: "medium", label: "Medium ($250 to $2,000)" },
-      { value: "high", label: "High ($2,000+)" },
+      { value: "low", label: "Low (under £250)" },
+      { value: "medium", label: "Medium (£250 to £2,000)" },
+      { value: "high", label: "High (£2,000+)" },
     ],
   },
   {
