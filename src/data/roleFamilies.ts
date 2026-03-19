@@ -46,6 +46,21 @@ export const roleFamilies: RoleFamily[] = [
     ],
   },
   {
+    id: "compliance_risk_governance",
+    label: "Compliance, risk, and governance",
+    description: "Manages controls, policy adherence, and audit readiness across teams.",
+    defaultSkillTags: [
+      "compliance_mindset",
+      "documentation",
+      "analytical_thinking",
+      "quality_assurance",
+      "stakeholder_management",
+      "process_improvement",
+      "research",
+      "organisation",
+    ],
+  },
+  {
     id: "operations_supply_chain",
     label: "Operations and supply chain",
     description: "Improves process reliability, throughput, and vendor coordination.",

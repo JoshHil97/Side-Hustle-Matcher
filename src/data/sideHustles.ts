@@ -33,7 +33,7 @@ export const sideHustles: SideHustle[] = [
     category: "Finance",
     requiredSkills: ["bookkeeping_basics", "spreadsheet_management", "compliance_mindset", "organisation"],
     preferredSkills: ["documentation", "stakeholder_management", "analytical_thinking"],
-    roleAffinity: ["finance_bookkeeping", "operations_supply_chain", "admin_office_support"],
+    roleAffinity: ["finance_bookkeeping", "compliance_risk_governance", "operations_supply_chain", "admin_office_support"],
     beginnerFriendly: 7,
     startupCostBand: "low",
     weeklyHoursMin: 3,
@@ -258,7 +258,7 @@ export const sideHustles: SideHustle[] = [
     category: "Data services",
     requiredSkills: ["data_analysis", "dashboarding", "spreadsheet_management", "presentation"],
     preferredSkills: ["analytical_thinking", "stakeholder_management", "automation"],
-    roleAffinity: ["data_bi_analysis", "finance_bookkeeping", "operations_supply_chain"],
+    roleAffinity: ["data_bi_analysis", "finance_bookkeeping", "compliance_risk_governance", "operations_supply_chain"],
     beginnerFriendly: 6,
     startupCostBand: "low",
     weeklyHoursMin: 4,
@@ -758,7 +758,7 @@ export const sideHustles: SideHustle[] = [
     category: "Operations consulting",
     requiredSkills: ["documentation", "process_improvement", "organisation", "communication"],
     preferredSkills: ["operations", "project_coordination", "stakeholder_management"],
-    roleAffinity: ["admin_office_support", "operations_supply_chain", "project_management", "customer_support_operations"],
+    roleAffinity: ["admin_office_support", "compliance_risk_governance", "operations_supply_chain", "project_management", "customer_support_operations"],
     beginnerFriendly: 8,
     startupCostBand: "low",
     weeklyHoursMin: 4,
@@ -783,7 +783,7 @@ export const sideHustles: SideHustle[] = [
     category: "Operations consulting",
     requiredSkills: ["process_improvement", "operations", "analytical_thinking", "communication"],
     preferredSkills: ["project_coordination", "stakeholder_management", "automation"],
-    roleAffinity: ["operations_supply_chain", "project_management", "data_bi_analysis"],
+    roleAffinity: ["operations_supply_chain", "compliance_risk_governance", "project_management", "data_bi_analysis"],
     beginnerFriendly: 5,
     startupCostBand: "low",
     weeklyHoursMin: 5,
@@ -799,6 +799,49 @@ export const sideHustles: SideHustle[] = [
     firstWeekSteps: ["Choose one niche process problem", "Create audit framework", "Run 3 discovery calls"],
     bestForYouIf: ["You are experienced in operations", "You can sell strategic outcomes", "You can lead stakeholder alignment"],
     watchOutFor: ["Needs authority and confidence", "Stakeholder buy-in can slow implementation"],
+    sameIndustryRisk: "high",
+  },
+  {
+    id: "compliance_documentation_audit_readiness",
+    name: "Compliance documentation and audit-readiness support",
+    shortDescription: "Help SMEs build controls evidence, policy packs, and audit-ready documentation.",
+    category: "Compliance services",
+    requiredSkills: ["compliance_mindset", "documentation", "quality_assurance", "analytical_thinking"],
+    preferredSkills: ["process_improvement", "stakeholder_management", "research"],
+    roleAffinity: ["compliance_risk_governance", "finance_bookkeeping", "operations_supply_chain", "project_management"],
+    beginnerFriendly: 6,
+    startupCostBand: "low",
+    weeklyHoursMin: 4,
+    weeklyHoursMax: 14,
+    onlineOffline: "hybrid",
+    callIntensity: "medium",
+    salesIntensity: "medium",
+    regulatoryFriction: "medium",
+    scalability: "high",
+    timeToFirstIncome: "moderate",
+    reasonsToRecommend: [
+      "High-value trust service for SMEs",
+      "Strong fit for detail-oriented analysts",
+      "Can evolve into recurring compliance retainers"
+    ],
+    firstOfferExamples: [
+      "Audit-readiness documentation sprint",
+      "Policy and controls evidence pack setup"
+    ],
+    firstWeekSteps: [
+      "Define one niche compliance package for SMEs",
+      "Create a compliance evidence checklist template",
+      "Offer three fixed-scope discovery audits"
+    ],
+    bestForYouIf: [
+      "You already work with policies and controls",
+      "You are strong at evidence gathering and documentation",
+      "You want commercially valuable B2B advisory work"
+    ],
+    watchOutFor: [
+      "Scope and legal boundaries must be explicit",
+      "Some clients may need specialist legal advice beyond your remit"
+    ],
     sameIndustryRisk: "high",
   },
   {

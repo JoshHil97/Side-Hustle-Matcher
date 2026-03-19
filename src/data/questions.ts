@@ -13,6 +13,7 @@ export const quizQuestions: QuizQuestion[] = [
       { value: "sales_account_management", label: "Sales and account management" },
       { value: "marketing", label: "Marketing" },
       { value: "finance_bookkeeping", label: "Finance and bookkeeping" },
+      { value: "compliance_risk_governance", label: "Compliance, risk, and governance" },
       { value: "operations_supply_chain", label: "Operations and supply chain" },
       { value: "project_management", label: "Project management" },
       { value: "software_engineering_webdev", label: "Software engineering and web development" },

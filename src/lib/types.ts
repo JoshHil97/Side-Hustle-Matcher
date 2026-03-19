@@ -49,6 +49,7 @@ export type RoleFamilyId =
   | "sales_account_management"
   | "marketing"
   | "finance_bookkeeping"
+  | "compliance_risk_governance"
   | "operations_supply_chain"
   | "project_management"
   | "software_engineering_webdev"
