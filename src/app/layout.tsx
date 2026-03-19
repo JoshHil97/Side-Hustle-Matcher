@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Manrope, IBM_Plex_Mono } from "next/font/google";
 import { InspirationVerse } from "@/components/layout/inspiration-verse";
 import "./globals.css";
@@ -24,10 +24,16 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${plexMono.variable} pb-20`}>
+      <body className={`${manrope.variable} ${plexMono.variable} pb-24`}>
         {children}
         <InspirationVerse />
       </body>

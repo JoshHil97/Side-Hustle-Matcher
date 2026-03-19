@@ -48,7 +48,7 @@ export default function ResultsPage() {
   const topSkills = bundle.normalized.skillTags.slice(0, 8);
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+    <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-8 pb-28 sm:px-6 sm:py-10">
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <Link href="/quiz" className="text-sm font-medium text-stone-600 hover:text-stone-900">
           ← Back to quiz
@@ -71,7 +71,7 @@ export default function ResultsPage() {
 
         <div className="relative">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">Personalised recommendation engine</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">Your top side hustle paths, ranked for real-world execution</h1>
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-4xl">Your top side hustle paths, ranked for real-world execution</h1>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-stone-600">
             We scored based on your role ({bundle.normalized.roleFamilyLabel}), selected tasks, tools, outputs, constraints, and commercial fit.
             Your current goal is
@@ -175,7 +175,7 @@ export default function ResultsPage() {
         <p className="mt-1 text-sm text-stone-600">Same engine, fixed example answers. Useful for tuning weights and understanding ranking behavior.</p>
 
         <div className="mt-4 overflow-x-auto">
-          <table className="w-full min-w-[880px] text-left text-sm">
+          <table className="w-full min-w-[760px] text-left text-sm">
             <thead>
               <tr className="border-b border-stone-200 text-xs uppercase tracking-wide text-stone-500">
                 <th className="py-2 pr-3">Side hustle</th>

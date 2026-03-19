@@ -94,12 +94,12 @@ export default function QuizPage() {
   }
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
-      <div className="mb-6 flex items-center justify-between gap-3">
+    <main className="mx-auto min-h-screen w-full max-w-4xl px-4 py-8 pb-28 sm:px-6 sm:py-12">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <Link href="/" className="text-sm font-medium text-stone-600 hover:text-stone-900">
           ← Back to home
         </Link>
-        <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-700">One question per step</span>
+        <span className="inline-flex w-fit rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-700">One question per step</span>
       </div>
 
       <div className="rounded-3xl border border-stone-200 bg-white p-4 shadow-sm shadow-stone-900/5 sm:p-6">
@@ -110,12 +110,12 @@ export default function QuizPage() {
         <QuizStep question={currentQuestion} selectedValues={selectedValues} onSelect={selectValue} />
       </div>
 
-      <div className="mt-5 flex items-center justify-between gap-3">
+      <div className="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
         <button
           type="button"
           onClick={goBack}
           disabled={currentIndex === 0}
-          className="inline-flex h-11 items-center rounded-xl border border-stone-300 bg-white px-5 text-sm font-semibold text-stone-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-stone-300 bg-white px-5 text-sm font-semibold text-stone-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
         >
           Back
         </button>
@@ -123,7 +123,7 @@ export default function QuizPage() {
           type="button"
           onClick={goNext}
           disabled={!canContinue}
-          className="inline-flex h-11 items-center rounded-xl bg-stone-900 px-5 text-sm font-semibold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-stone-900 px-5 text-sm font-semibold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
         >
           {currentIndex === quizQuestions.length - 1 ? "See my matches" : "Next"}
         </button>

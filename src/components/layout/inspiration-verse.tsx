@@ -46,7 +46,10 @@ export function InspirationVerse() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-stone-700 bg-gradient-to-r from-[#1e120b]/95 via-[#2a190f]/95 to-[#1e120b]/95 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-2 px-3 py-2 sm:px-4">
+      <div
+        className="mx-auto flex w-full max-w-6xl items-center gap-2 px-3 py-2 sm:px-4"
+        style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+      >
         <button
           type="button"
           onClick={() => setIndex((current) => (current - 1 + VERSES.length) % VERSES.length)}

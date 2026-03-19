@@ -26,8 +26,8 @@ export function AnswerChips({ options, selectedValues, multi, onSelect }: Answer
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-semibold text-stone-900">{option.label}</p>
-                {option.description ? <p className="mt-1 text-xs text-stone-600">{option.description}</p> : null}
+                <p className="text-sm font-semibold text-stone-900 break-words">{option.label}</p>
+                {option.description ? <p className="mt-1 text-xs text-stone-600 break-words">{option.description}</p> : null}
               </div>
               <span
                 className={`mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px] font-bold ${
