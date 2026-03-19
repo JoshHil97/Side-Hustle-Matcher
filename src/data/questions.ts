@@ -72,6 +72,7 @@ export const quizQuestions: QuizQuestion[] = [
       { value: "coding_building", label: "Coding or web implementation" },
       { value: "automation_workflows", label: "Automation and workflow setup" },
       { value: "training_teaching", label: "Teaching, onboarding, or coaching" },
+      { value: "hosting_presenting", label: "Hosting webinars, workshops, or live presentations" },
       { value: "sales_outreach", label: "Pitching, outreach, or closing" },
       { value: "vendor_coordination", label: "Vendor or partner coordination" },
     ],
@@ -99,6 +100,7 @@ export const quizQuestions: QuizQuestion[] = [
       { value: "ads_tools", label: "Ads tools (Meta/Google Ads Manager)" },
       { value: "email_marketing", label: "Email marketing tools (Klaviyo, Mailchimp)" },
       { value: "lms_tools", label: "Learning tools (LMS, lesson platforms)" },
+      { value: "meeting_tools", label: "Live meeting tools (Zoom, Teams, webinar platforms)" },
     ],
   },
   {
@@ -122,6 +124,7 @@ export const quizQuestions: QuizQuestion[] = [
       { value: "brand_design", label: "Brand kits, graphics, or design systems" },
       { value: "video_content", label: "Edited long or short form videos" },
       { value: "training_curriculum", label: "Training sessions or course materials" },
+      { value: "hosted_workshops", label: "Hosted webinars, workshops, or stakeholder presentations" },
       { value: "client_portfolio", label: "Client-facing portfolio or case studies" },
     ],
   },

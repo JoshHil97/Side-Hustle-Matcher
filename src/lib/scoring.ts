@@ -44,6 +44,7 @@ const TASK_TO_SKILLS: Record<string, SkillTag[]> = {
   coding_building: ["coding", "web_development", "problem_solving"],
   automation_workflows: ["automation", "process_improvement", "operations"],
   training_teaching: ["teaching", "coaching", "presentation"],
+  hosting_presenting: ["presentation", "communication", "teaching", "stakeholder_management"],
   sales_outreach: ["sales_outreach", "persuasion", "relationship_building"],
   vendor_coordination: ["vendor_management", "project_coordination", "operations"],
 };
@@ -64,6 +65,7 @@ const TOOL_TO_SKILLS: Record<string, SkillTag[]> = {
   ads_tools: ["digital_marketing", "data_analysis", "persuasion"],
   email_marketing: ["digital_marketing", "writing", "content_strategy"],
   lms_tools: ["teaching", "coaching", "documentation"],
+  meeting_tools: ["presentation", "communication", "relationship_building"],
 };
 
 const OUTPUT_TO_SKILLS: Record<string, SkillTag[]> = {
@@ -80,6 +82,7 @@ const OUTPUT_TO_SKILLS: Record<string, SkillTag[]> = {
   brand_design: ["design", "creativity", "communication"],
   video_content: ["video_editing", "editing", "content_strategy"],
   training_curriculum: ["teaching", "coaching", "presentation"],
+  hosted_workshops: ["presentation", "teaching", "communication", "coaching"],
   client_portfolio: ["communication", "persuasion", "relationship_building"],
 };
 
