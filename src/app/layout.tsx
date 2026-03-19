@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Manrope, IBM_Plex_Mono } from "next/font/google";
-import { InspirationVerse } from "@/components/layout/inspiration-verse";
-import { AuthProvider } from "@/components/providers/auth-provider";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -16,24 +14,14 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Career Command | Job Application CRM",
-  description: "Premium job application tracker with timelines, notes, reminders, documents and analytics.",
-  icons: {
-    icon: "/cross.svg",
-    shortcut: "/cross.svg",
-    apple: "/cross.svg",
-  },
+  title: "Side Hustle Matcher",
+  description: "Practical side hustle recommendations based on your real role, skills, and constraints.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-GB">
-      <body className={`${manrope.variable} ${plexMono.variable} pb-14`}>
-        <AuthProvider>
-          {children}
-          <InspirationVerse />
-        </AuthProvider>
-      </body>
+    <html lang="en">
+      <body className={`${manrope.variable} ${plexMono.variable}`}>{children}</body>
     </html>
   );
 }

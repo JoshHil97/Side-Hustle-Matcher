@@ -1,0 +1,130 @@
+import type { RoleFamily } from "@/lib/types";
+
+export const roleFamilies: RoleFamily[] = [
+  {
+    id: "admin_office_support",
+    label: "Administration and office support",
+    description: "Keeps calendars, comms, and operational admin running smoothly.",
+    defaultSkillTags: ["admin_systems", "scheduling", "documentation", "organisation", "communication", "time_management"],
+  },
+  {
+    id: "customer_support_operations",
+    label: "Customer support and service operations",
+    description: "Solves customer issues and improves support workflows.",
+    defaultSkillTags: [
+      "customer_support",
+      "communication",
+      "troubleshooting",
+      "documentation",
+      "process_improvement",
+      "relationship_building",
+    ],
+  },
+  {
+    id: "sales_account_management",
+    label: "Sales and account management",
+    description: "Builds pipeline, closes opportunities, and grows accounts.",
+    defaultSkillTags: ["persuasion", "relationship_building", "sales_outreach", "crm_usage", "stakeholder_management", "communication"],
+  },
+  {
+    id: "marketing",
+    label: "Marketing",
+    description: "Creates demand with content, campaigns, and channel execution.",
+    defaultSkillTags: ["digital_marketing", "content_strategy", "writing", "editing", "research", "analytical_thinking"],
+  },
+  {
+    id: "finance_bookkeeping",
+    label: "Finance and bookkeeping",
+    description: "Tracks financial health and keeps records accurate.",
+    defaultSkillTags: [
+      "bookkeeping_basics",
+      "spreadsheet_management",
+      "compliance_mindset",
+      "analytical_thinking",
+      "documentation",
+      "organisation",
+    ],
+  },
+  {
+    id: "operations_supply_chain",
+    label: "Operations and supply chain",
+    description: "Improves process reliability, throughput, and vendor coordination.",
+    defaultSkillTags: ["operations", "process_improvement", "vendor_management", "project_coordination", "analytical_thinking", "organisation"],
+  },
+  {
+    id: "project_management",
+    label: "Project management",
+    description: "Plans and drives cross-functional delivery.",
+    defaultSkillTags: ["project_coordination", "stakeholder_management", "documentation", "organisation", "communication", "process_improvement"],
+  },
+  {
+    id: "software_engineering_webdev",
+    label: "Software engineering and web development",
+    description: "Builds and ships software products and websites.",
+    defaultSkillTags: ["coding", "web_development", "automation", "troubleshooting", "analytical_thinking", "problem_solving"],
+  },
+  {
+    id: "data_bi_analysis",
+    label: "Data and BI analysis",
+    description: "Turns data into insights through reports and dashboards.",
+    defaultSkillTags: [
+      "data_analysis",
+      "dashboarding",
+      "spreadsheet_management",
+      "analytical_thinking",
+      "presentation",
+      "documentation",
+    ],
+  },
+  {
+    id: "it_support_systems",
+    label: "IT support and systems",
+    description: "Maintains systems uptime and resolves technical issues.",
+    defaultSkillTags: ["troubleshooting", "customer_support", "automation", "operations", "documentation", "problem_solving"],
+  },
+  {
+    id: "design",
+    label: "Design",
+    description: "Produces visual assets, product interfaces, and creative outputs.",
+    defaultSkillTags: ["design", "creativity", "communication", "editing", "presentation", "stakeholder_management"],
+  },
+  {
+    id: "writing_editing",
+    label: "Writing and editing",
+    description: "Develops clear written content for audiences and outcomes.",
+    defaultSkillTags: ["writing", "editing", "research", "communication", "documentation", "content_strategy"],
+  },
+  {
+    id: "education_training",
+    label: "Education and training",
+    description: "Teaches, coaches, and builds learning experiences.",
+    defaultSkillTags: ["teaching", "coaching", "communication", "organisation", "presentation", "stakeholder_management"],
+  },
+  {
+    id: "healthcare_allied_health",
+    label: "Healthcare and allied health",
+    description: "Provides patient-facing or clinical support in regulated contexts.",
+    defaultSkillTags: ["customer_support", "compliance_mindset", "documentation", "communication", "organisation", "stakeholder_management"],
+  },
+  {
+    id: "skilled_trades_field_services",
+    label: "Skilled trades and field services",
+    description: "Delivers on-site practical work with safety and quality standards.",
+    defaultSkillTags: ["troubleshooting", "operations", "vendor_management", "problem_solving", "organisation", "customer_support"],
+  },
+  {
+    id: "retail_hospitality_management",
+    label: "Retail and hospitality management",
+    description: "Leads service operations, teams, and customer experience.",
+    defaultSkillTags: [
+      "customer_support",
+      "project_coordination",
+      "operations",
+      "relationship_building",
+      "organisation",
+      "stakeholder_management",
+    ],
+  },
+];
+
+export const roleFamilyById = Object.fromEntries(roleFamilies.map((role) => [role.id, role])) as Record<string, RoleFamily>;
