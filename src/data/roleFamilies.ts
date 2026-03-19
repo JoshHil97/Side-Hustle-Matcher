@@ -76,7 +76,7 @@ export const roleFamilies: RoleFamily[] = [
     id: "software_engineering_webdev",
     label: "Software engineering and web development",
     description: "Builds and ships software products and websites.",
-    defaultSkillTags: ["coding", "web_development", "automation", "troubleshooting", "analytical_thinking", "problem_solving"],
+    defaultSkillTags: ["coding", "web_development", "automation", "devops", "cloud_platforms", "ci_cd", "troubleshooting", "analytical_thinking", "problem_solving"],
   },
   {
     id: "data_bi_analysis",
@@ -95,7 +95,7 @@ export const roleFamilies: RoleFamily[] = [
     id: "it_support_systems",
     label: "IT support and systems",
     description: "Maintains systems uptime and resolves technical issues.",
-    defaultSkillTags: ["troubleshooting", "customer_support", "automation", "operations", "documentation", "problem_solving"],
+    defaultSkillTags: ["troubleshooting", "customer_support", "automation", "cloud_platforms", "incident_management", "monitoring_observability", "operations", "documentation", "problem_solving"],
   },
   {
     id: "design",

@@ -39,6 +39,13 @@ export const SKILL_TAGS = [
   "presentation",
   "time_management",
   "problem_solving",
+  "cloud_platforms",
+  "devops",
+  "infrastructure_as_code",
+  "ci_cd",
+  "monitoring_observability",
+  "incident_management",
+  "cloud_security_basics",
 ] as const;
 
 export type SkillTag = (typeof SKILL_TAGS)[number];
