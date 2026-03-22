@@ -24,6 +24,12 @@ export default function HomePage() {
             >
               Start the quiz
             </Link>
+            <Link
+              href="/play"
+              className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-stone-300 bg-white px-5 text-sm font-semibold text-stone-700 transition hover:bg-stone-100 sm:w-auto"
+            >
+              Play TARDIS game
+            </Link>
             <span className="text-sm text-stone-500">Takes about 5 minutes. 15 practical questions.</span>
           </div>
         </div>
@@ -57,6 +63,22 @@ export default function HomePage() {
           Recommendations are based on a weighted engine: skill match, preference fit, constraint fit, scalability, and time to first cash,
           then friction penalties for budget, schedule, sales, and regulation mismatch.
         </p>
+      </section>
+
+      <section className="mt-8 rounded-3xl border border-amber-200 bg-gradient-to-r from-amber-50 via-white to-orange-50 p-6 shadow-sm shadow-stone-900/5 sm:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-700">Fun section</p>
+        <h3 className="mt-2 text-2xl font-semibold text-stone-900">Pilot the TARDIS through space</h3>
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-stone-700">
+          Added a quick mini-game with a local leaderboard. Tap to fly through time rifts and challenge your best score.
+        </p>
+        <div className="mt-5">
+          <Link
+            href="/play"
+            className="inline-flex h-11 items-center rounded-xl bg-stone-900 px-5 text-sm font-semibold text-white transition hover:bg-stone-800"
+          >
+            Open mini-game
+          </Link>
+        </div>
       </section>
     </main>
   );
